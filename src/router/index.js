@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import index from '@/views/index'
-import search from '@/components/search'
-import movieSession from '@/components/moviesSession/movieSession'
 
-import error from '@/views/error'
 
 Vue.use(VueRouter)
 
@@ -13,26 +9,26 @@ const routes = [
 	{
 		path: '/',
 		redirect: '/movies',
-		component: index,
+		component: ()=>import('../views/index'),
 	},
 	{
 		path: '/movies',
 		name: 'index',
-		component: index,
+		component: ()=>import('../views/index'),
 	},
 	{
 		path: '/search',
 		name: 'search',
-		component: search,
+		component: ()=>import('../components/search'),
 	},
 	{
 		path: '/movieShows?movie_id=:id',
 		name: 'movieSession',
-		component: movieSession,
+		component:()=>import('../components/moviesSession/movieSession'),
 	},
 	{
 		path: '*',
-		component: error,
+		component: ()=>import('../views/error'),
 	},
 ]
 
