@@ -17,7 +17,9 @@
 
     <main class="w-full flex flex-row flex-wrap justify-center items-center">
       <div class="w-1/6 m-2 opacity-80 hover:opacity-100 " v-for="(movie, key) in searchMovies" :key="key">
-        <Movie :item="movie"/>
+        <keep-alive >
+          <Movie :item="movie"/>
+        </keep-alive>
       </div>
     </main>
   </div>
@@ -37,6 +39,9 @@ export default {
     return {
       str: ''
     }
+  },
+  beforeMount() {
+    this.cleanState()
   },
   computed: {
     ...mapGetters(['searchMovies']),
@@ -58,6 +63,7 @@ export default {
             [v.split(':')[0]]: ghost(v.split(':')[1]),
           }), {})
       this.letsSearchMovies(searchObj)
+      this.str=''
     },
   },
 }

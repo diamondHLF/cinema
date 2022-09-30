@@ -16,11 +16,15 @@
             v-for="(item, key) in moviesSession"
             :key="key"
         >
-          <session-item :id="movieInfo.id" :item="item" @select-session="selectSession"/>
+          <keep-alive>
+            <session-item :id="movieInfo.id" :item="item" @select-session="selectSession"/>
+          </keep-alive>
         </div>
       </div>
       <div class="flex-initial w-11/12">
-        <Tickets  @select-ticket="selectTicket"/>
+        <keep-alive>
+          <Tickets  @select-ticket="selectTicket"/>
+        </keep-alive>
       </div>
     </section>
   </div>

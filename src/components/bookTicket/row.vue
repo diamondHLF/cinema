@@ -2,11 +2,13 @@
 	<div class="">
 		<div class="flex flex-row w-full">
 			<span class="flex-initial w-20">№ {{ seatsItems[0].row }}</span>
-			<Seats class="flex-initial w-11/12"
-				:row-seats="seatsItems[1]"
-				:row-id="seatsItems[0].row"
-				@select-seats="selectSeatsAndRow"
-			/>
+      <keep-alive>
+        <Seats class="flex-initial w-11/12"
+               :row-seats="seatsItems[1]"
+               :row-id="seatsItems[0].row"
+               @select-seats="selectSeatsAndRow"
+        />
+      </keep-alive>
 		</div>
 	</div>
 </template>

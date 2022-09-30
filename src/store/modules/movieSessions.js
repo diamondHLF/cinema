@@ -22,6 +22,7 @@ const moviesSession = {
 		},
 	},
 	actions: {
+		cleanState: async () => await moviesSessionsStore(),
 		getMoviesSession: async (context, payload) => {
 			moviesSessionsStore()
 			await instance

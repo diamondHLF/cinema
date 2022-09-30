@@ -28,8 +28,11 @@
 				},
 			},
 		},
-		methods: {
-			...mapActions(['getMoviesSession', 'getMovieInfo']),
+    beforeDestroy() {
+      this.cleanState()
+    },
+    methods: {
+			...mapActions(['getMoviesSession', 'getMovieInfo','cleanState']),
 			showShedule(item) {
 				this.getMoviesSession(item)
 				this.getMovieInfo(item)
