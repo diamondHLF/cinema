@@ -1,18 +1,27 @@
 <template>
-	<div>
-		<navigation />
-		<indexHomePage />
-	</div>
+  <div>
+    <keep-alive>
+      <component :is="navigationComponent"></component>
+    </keep-alive>
+    <keep-alive>
+      <component :is="indexHomePageComponent"></component>
+    </keep-alive>
+  </div>
 </template>
 <script>
-	import navigation from '@/components/base/navigation'
-	import indexHomePage from '@/components/base/indexHomePage'
 
-	export default {
-		name: 'Index',
-		components: {
-			indexHomePage,
-			navigation,
-		},
-	}
+
+export default {
+  name: 'Index',
+  computed: {
+    navigationComponent() {
+      return () => import('/src/components/base/navigation')
+    },
+    indexHomePageComponent() {
+      return () => import('/src/components/base/indexHomePage')
+
+
+    }
+  }
+}
 </script>

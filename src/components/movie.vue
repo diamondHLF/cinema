@@ -1,5 +1,5 @@
 <template>
-		<img class="w-full shadow-md  hover:shadow-amber-100/50 rounded-xl hover:shadow-2xl " :src="item.image" @click="showShedule(item)" />
+		<img class="w-full shadow-md  hover:shadow-amber-100/50 rounded-xl hover:shadow-2xl " :src="item.image" @click="showShedule(item)" :alt="item.navigation"/>
 </template>
 
 <script>

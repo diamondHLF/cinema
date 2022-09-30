@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Navigation/>
+    <keep-alive>
+      <component :is="navigationComponent"></component>
+    </keep-alive>
     <form class="mt-3 mb-3 flex rounded-md shadow-sm w-10/12 mx-auto h-12">
       <input
           class="block w-full rounded-none rounded-l-md  border border-gray-300 bg-gray-50 pl-10 focus:border-amber-500 focus:outline-none focus:ring-1  focus:ring-amber-500 sm:text-sm"
@@ -17,8 +19,8 @@
 
     <main class="w-full flex flex-row flex-wrap justify-center items-center">
       <div class="w-1/6 m-2 opacity-80 hover:opacity-100 " v-for="(movie, key) in searchMovies" :key="key">
-        <keep-alive >
-          <Movie :item="movie"/>
+        <keep-alive>
+          <component :is="movieComponent" :item="movie"></component>
         </keep-alive>
       </div>
     </main>
@@ -26,15 +28,12 @@
 </template>
 
 <script>
-import Movie from '@/components/movie'
-import Navigation from '@/components/base/navigation'
 
 import {createNamespacedHelpers} from 'vuex'
 
 const {mapGetters, mapActions} = createNamespacedHelpers('search')
 export default {
   name: 'Search',
-  components: {Navigation, Movie},
   data() {
     return {
       str: ''
@@ -45,6 +44,12 @@ export default {
   },
   computed: {
     ...mapGetters(['searchMovies']),
+    movieComponent(){
+      return ()=>import('/src/components/movie')
+    },
+    navigationComponent(){
+      return ()=>import('/src/components/base/navigation')
+    },
   },
   methods: {
     ...mapActions(['letsSearchMovies', 'cleanState']),

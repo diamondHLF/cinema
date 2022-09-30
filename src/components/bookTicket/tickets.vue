@@ -2,28 +2,21 @@
 	<div class="">
 		<div v-for="(ticket, key) in ticketsTree" :key="key">
       <keep-alive>
-        <Row
-            :seats-items="ticket"
-            @select-seats-and-row="selectSeatsAndRow"
-        />
+        <component :is="rowComponent" :seats-items="ticket" @select-seats-and-row="selectSeatsAndRow"></component>
       </keep-alive>
 		</div>
 	</div>
 </template>
 
 <script>
-	import Row from '@/components/bookTicket/row'
 	import { createNamespacedHelpers } from 'vuex'
 
 	const { mapGetters,mapActions } = createNamespacedHelpers('tickets')
 
 	export default {
 		name: 'Tickets',
-		components: { Row },
-    beforeRouteLeave (to, from,next) {
-      console.log('removed')
+    beforeRouteLeave () {
       this.cleanState()
-      next()
     },
     beforeDestroy() {
       this.cleanState()
@@ -33,6 +26,9 @@
     },
 		computed: {
 			...mapGetters(['ticketsTree']),
+      rowComponent(){
+        return ()=>import('/src/components/bookTicket/row')
+      }
 		},
 		methods: {
       ...mapActions(['cleanState']),

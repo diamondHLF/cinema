@@ -23,7 +23,7 @@
       </div>
       <div class="flex-initial w-11/12">
         <keep-alive>
-          <Tickets  @select-ticket="selectTicket"/>
+          <component :is="ticketComponent" @select-ticket="selectTicket"></component>
         </keep-alive>
       </div>
     </section>
@@ -35,13 +35,12 @@ import Navigation from '@/components/base/navigation'
 import {createNamespacedHelpers} from 'vuex'
 import SessionItem from '@/components/moviesSession/sessionItem'
 import StandartMethods from '@/mixins/standartMethods'
-import Tickets from '@/components/bookTicket/tickets'
 
 const {mapGetters} = createNamespacedHelpers('moviesSession')
 const {mapActions} = createNamespacedHelpers('tickets')
 export default {
   name: 'MovieSession',
-  components: {Tickets, SessionItem, Navigation},
+  components: { SessionItem, Navigation},
   mixins: [StandartMethods],
   data() {
     return {
@@ -50,6 +49,9 @@ export default {
   },
   computed: {
     ...mapGetters(['moviesSession', 'movieInfo']),
+    ticketComponent(){
+      return ()=>import('/src/components/bookTicket/tickets')
+    }
   },
   methods: {
     ...mapActions(['buyTicket']),
