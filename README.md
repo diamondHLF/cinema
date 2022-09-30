@@ -15,6 +15,13 @@ yarn serve
 yarn build
 ```
 
+### Start Build project
+```
+yarn global add serve
+
+serve -s dist   
+```
+
 ### Lints and fixes files
 ```
 yarn lint
