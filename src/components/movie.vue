@@ -1,7 +1,7 @@
 <template>
   <figure v-lazyload class="simg">
     <img
-         class="w-full shadow-md  hover:shadow-amber-100/50 rounded-xl hover:shadow-2xl fade-in"
+         class="w-full h-full shadow-md  hover:shadow-amber-100/50 rounded-xl hover:shadow-2xl fade-in"
          decoding="async"
          :data-src="item.image"
          :alt="item.navigation"
