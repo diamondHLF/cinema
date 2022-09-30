@@ -1,29 +1,21 @@
 <template>
-  <figure v-lazyload class="simg">
-    <img
-         class="w-full h-full shadow-md  hover:shadow-amber-100/50 rounded-xl hover:shadow-2xl fade-in"
-         decoding="async"
-         :data-src="item.image"
-         :alt="item.name"
-         @click="showShedule(item)"
-    />
-  </figure>
+  <div @click="showShedule(item)">
+    <AdvanceFigure :src="imageProps"/>
+  </div>
 </template>
 
 <script>
-import LazyLoadDirectives from "/src/directives/LazyLoadDirectives";
 
 import StandartMethods from '@/mixins/standartMethods'
-import {createNamespacedHelpers} from 'vuex'
+import AdvanceFigure from "@/components/base/AdvanceFigure";
 
+import {createNamespacedHelpers} from 'vuex'
 const {mapActions} = createNamespacedHelpers('moviesSession')
 
 export default {
   name: 'Movie',
+  components: {AdvanceFigure},
   mixins: [StandartMethods],
-  directives: {
-    lazyload: LazyLoadDirectives,
-  },
   props: {
     item: {
       type: Object,
@@ -41,8 +33,17 @@ export default {
       },
     },
   },
+  dat(){
+    return{
+    }
+  },
   beforeDestroy() {
     this.cleanState()
+  },
+  computed:{
+    imageProps(){
+      return {image:this.item.image,name:this.item.name}
+    },
   },
   methods: {
     ...mapActions(['getMoviesSession', 'getMovieInfo', 'cleanState']),

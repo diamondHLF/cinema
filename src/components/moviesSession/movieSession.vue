@@ -1,8 +1,10 @@
 <template>
   <div>
-    <Navigation/>
+    <keep-alive>
+      <component :is="navigationComponent"></component>
+    </keep-alive>
     <section class="flex flex-row my-6">
-      <img class="w-1/5" :src="movieInfo.image"/>
+      <AdvanceFigure :src="imageProps"/>
       <div class="w-4/5">
         <h2 class="text-3xl my-2 p-5">{{ movieInfo.name }}</h2>
         <p class="text-xl my-2 text-left p-5">{{ findGenres(movieInfo.genre) }}</p>
@@ -17,7 +19,7 @@
             :key="key"
         >
           <keep-alive>
-            <session-item :id="movieInfo.id" :item="item" @select-session="selectSession"/>
+            <component :is="sessionitemComponent" :id="movieInfo.id" :item="item" @select-session="selectSession"></component>>
           </keep-alive>
         </div>
       </div>
@@ -31,16 +33,16 @@
 </template>
 
 <script>
-import Navigation from '@/components/base/navigation'
 import {createNamespacedHelpers} from 'vuex'
 import SessionItem from '@/components/moviesSession/sessionItem'
 import StandartMethods from '@/mixins/standartMethods'
+import AdvanceFigure from "@/components/base/AdvanceFigure";
 
 const {mapGetters} = createNamespacedHelpers('moviesSession')
 const {mapActions} = createNamespacedHelpers('tickets')
 export default {
   name: 'MovieSession',
-  components: { SessionItem, Navigation},
+  components: {AdvanceFigure, SessionItem },
   mixins: [StandartMethods],
   data() {
     return {
@@ -49,9 +51,18 @@ export default {
   },
   computed: {
     ...mapGetters(['moviesSession', 'movieInfo']),
+    imageProps(){
+      return {image:this.movieInfo.image,name:this.movieInfo.name}
+    },
+    sessionitemComponent(){
+      return ()=>import('/src/components/moviesSession/sessionItem')
+    },
+    navigationComponent() {
+      return () => import('/src/components/base/navigation')
+    },
     ticketComponent(){
       return ()=>import('/src/components/bookTicket/tickets')
-    }
+    },
   },
   methods: {
     ...mapActions(['buyTicket']),
